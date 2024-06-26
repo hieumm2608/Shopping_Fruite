@@ -106,7 +106,7 @@
 							<td>${i.ngaytao}</td>
 							<td>${i.dongia}</td>
 							<td>${i.stt}</td>
-							<td><a href="/CartManager/idhd=${i.id}">chỉnh sửa</a></td>
+							<td><a href="/CartManager/${i.id}">chỉnh sửa</a></td>
 						</tr>
 					</C:forEach>
 

@@ -10,6 +10,7 @@ import com.MinhHieu.model.hoadonct;
 
 @Repository
 public interface hoadonctDao extends JpaRepository<hoadonct, Integer> {
-	@Query("select h from hoadonct h inner join products p on h.product_id = p.product_id where h.hoadon_id = ?1")
-	List<Object> findByIdhd(int id);
+	@Query("select p from hoadonct p where p.hoadon.id = ?1")
+	List<hoadonct> findBymahd(int idHdct);
 }
+ 

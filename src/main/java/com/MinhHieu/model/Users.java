@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Table(name="Users")
 public class Users implements Serializable {
 	@Id
-	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 	private String userName;

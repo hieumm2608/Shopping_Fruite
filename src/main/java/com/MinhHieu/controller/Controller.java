@@ -1,6 +1,7 @@
 package com.MinhHieu.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.MinhHieu.dao.Hoadondao;
 import com.MinhHieu.dao.ProductDao;
 import com.MinhHieu.dao.UserDao;
+import com.MinhHieu.dao.hoadonctDao;
 import com.MinhHieu.model.Hoadon;
 import com.MinhHieu.model.Product;
 import com.MinhHieu.model.Users;
+import com.MinhHieu.model.hoadonct;
 import com.MinhHieu.service.SessionService;
 
 import jakarta.servlet.ServletContext;
@@ -47,6 +51,8 @@ public class Controller {
 	@Autowired
 	ServletContext application;
 
+	@Autowired
+	hoadonctDao daohdct;
 	@Autowired
 	SessionService session;
 
@@ -126,10 +132,51 @@ public class Controller {
 		return "History";
 	}
 
+	@PostMapping("/statistics")
+	public String staPost(Model model, @RequestParam("usernamest") Optional<String> username,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Optional<Date> date) {
+		Pageable page = PageRequest.of(0, 5);
+		String a = username.orElse(null);
+		Date b = date.orElse(null);
+		System.out.println(a);
+		System.out.println(b);
+		List<Users> listu = daoU.findAll();
+		model.addAttribute("listu", listu);
+		if (a.equals("Username") && b == null) {
+			Page<Hoadon> listhd = daoH.findAll(page);
+			model.addAttribute("listhd", listhd);
+			System.out.println("2");
+			return "/statistic";
+		} else if (a.equals("Username") || b == null) {
+			if (b == null) {
+				Page<Hoadon> listhdusername = daoH.findAllbyuserName(a, page);
+				model.addAttribute("listhd", listhdusername);
+			}
+			if (a.equals("Username")) {
+				Page<Hoadon> listhdusername = daoH.findAllbydate(b, page);
+				model.addAttribute("listhd", listhdusername);
+			}
+			System.err.println("1");
+			return "/statistic";
+		} else {
+			Page<Hoadon> listhdusername = daoH.findAllbyuserNameDate(username.orElse(null), date.orElse(null), page);
+			model.addAttribute("listhd", listhdusername);
+			System.out.println("3");
+
+		}
+
+		return "/statistic";
+
+	}
+
 	@RequestMapping("/statistics")
 	public String statistics(Model model) {
+
 		Users u = session.getAttribute("ulg");
 		if (u != null && u.isRole() == true) {
+			List<Users> listu = daoU.findAll();
+			model.addAttribute("listu", listu);
+
 			Pageable p = PageRequest.of(0, 5);
 			Page<Hoadon> listhd = daoH.findAll(p);
 			model.addAttribute("listhd", listhd);
@@ -146,8 +193,9 @@ public class Controller {
 	}
 
 	@RequestMapping("/CartManager/{id}")
-	public String cartid(Model model,@PathVariable("id") String id) {
-		
+	public String cartid(Model model, @PathVariable("id") int id) {
+		List<hoadonct> listhdct = daohdct.findBymahd(id);
+		model.addAttribute("listhdct", listhdct);
 		return "Cartmanager";
 	}
 

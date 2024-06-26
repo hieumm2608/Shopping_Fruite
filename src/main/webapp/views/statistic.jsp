@@ -57,85 +57,49 @@
 					dịch </a> <a href="/statistics"
 					class="list-group-item list-group-item-action active"> Thống kê
 					(admin) </a> <a href="/ProductManager"
-					class="list-group-item list-group-item-action">Quản lí sản phẩm 
-					(admin)</a>
-					<a href="/Admin"
-					class="list-group-item list-group-item-action">Quản lí người dùng
-					(admin)</a>
-					 <a href="/AccountManager"
+					class="list-group-item list-group-item-action">Quản lí sản phẩm
+					(admin)</a> <a href="/Admin"
+					class="list-group-item list-group-item-action">Quản lí người
+					dùng (admin)</a> <a href="/AccountManager"
 					class="list-group-item list-group-item-action"> Quản lí tài
 					khoản </a>
 			</div>
 		</div>
 		<div class="col-8">
-			<h4>Thống kê:</h4>
-			<hr>
-			<div class="row">
-				<div class="col-4">
-					<h5>Ngày:</h5>
-					<select class="form-select" aria-label="">
-						<option selected>Ngày</option>
+			<form action="/statistics" method="post">
+				<h4>Thống kê:</h4>
+				<hr>
+				<div class="row">
+					<div class="col-4 mt-3">
+						<h5>Ngày:</h5>
+						<input class="form-select" type="date" name="date">
+					</div>
+					<div class="col-4 mt-3">
+						<h5>Username</h5>
+						<select class="form-select" aria-label="" name="usernamest">
+							<option selected>Username</option>
 
-						<c:forEach var="i" begin="1" end="31">
-							<option value="${i}">${i}</option>
-						</c:forEach>
+							<c:forEach var="i" items="${listu}">
+								<option >${i.userName}</option>
+							</c:forEach>
 
-					</select>
+						</select>
+					</div>
+					<div class="col-4 mt-4">
+						<input type="submit" class="btn btn-primary  mt-4" value="submit">
+					</div>
 				</div>
-				<div class="col-4">
-					<h5>Tháng:</h5>
-					<select class="form-select" aria-label="">
-						<option selected>Tháng</option>
 
-						<c:forEach var="i" begin="1" end="12">
-							<option value="${i}">${i}</option>
-						</c:forEach>
 
-					</select>
-				</div>
-				<div class="col-4">
-					<h5>Năm:</h5>
-					<select class="form-select" aria-label="">
-						<option selected>Năm</option>
+			</form>
 
-						<c:forEach var="i" begin="2020" end="2024">
-							<option value="${i}">${i}</option>
-						</c:forEach>
 
-					</select>
-				</div>
-				<div class="col-4 mt-3">
-					<h5>Username</h5>
-					<select class="form-select" aria-label="">
-						<option selected>Userame</option>
-
-						<c:forEach var="i" begin="2020" end="2024">
-							<option value="${i}">${i}</option>
-						</c:forEach>
-
-					</select>
-				</div>
-				<div class="col-4 mt-3">
-					<h5>Sản phẩm</h5>
-					<select class="form-select" aria-label="">
-						<option selected>Userame</option>
-
-						<c:forEach var="i" begin="2020" end="2024">
-							<option value="${i}">${i}</option>
-						</c:forEach>
-
-					</select>
-				</div>
-				<div class="col-4 mt-3">
-					<button type="button" class="btn btn-primary  mt-4">Submit</button>
-				</div>
-			</div>
 
 
 			<table class="table">
 				<thead>
 					<tr>
-						
+
 						<th scope="col">Mã đơn hàng</th>
 						<th scope="col">Nguời tạo</th>
 						<th scope="col">Ngày tạo</th>
@@ -148,7 +112,7 @@
 					<c:forEach var="i" items="${listhd.content}">
 						<tr>
 							<td>${i.id}</td>
-							<td>${i.user.userId}</td>
+							<td>${i.user.userName}</td>
 							<td>${i.ngaytao}</td>
 							<td>${i.dongia}</td>
 							<td>${i.stt}</td>
@@ -160,7 +124,7 @@
 			</table>
 			<h3>Tổng tiền: ${tt}</h3>
 		</div>
-		<div></div>
+
 	</div>
 
 

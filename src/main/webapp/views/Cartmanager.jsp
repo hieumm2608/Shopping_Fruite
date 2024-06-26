@@ -116,16 +116,16 @@
 									<tr>
 										<th scope="row">
 											<div class="d-flex align-items-center">
-												<img src="img/vegetable-item-3.png"
+												<img src="/img/${i.product.imgSr}"
 													class="img-fluid me-5 rounded-circle"
 													style="width: 80px; height: 80px;" alt="">
 											</div>
 										</th>
 										<td>
-											<p class="mb-0 mt-4">Big Banana</p>
+											<p class="mb-0 mt-4">${i.product.prodcutName}</p>
 										</td>
 										<td>
-											<p class="mb-0 mt-4">2.99 $</p>
+											<p class="mb-0 mt-4">${i.product.productPrice}</p>
 										</td>
 										<td>
 											<div class="input-group quantity mt-4" style="width: 100px;">
@@ -137,7 +137,7 @@
 												</div>
 												<input type="text"
 													class="form-control form-control-sm text-center border-0"
-													value="1">
+													value="${i.product.quanity}">
 												<div class="input-group-btn">
 													<button
 														class="btn btn-sm btn-plus rounded-circle bg-light border">
@@ -147,7 +147,7 @@
 											</div>
 										</td>
 										<td>
-											<p class="mb-0 mt-4">2.99 $</p>
+											<p class="mb-0 mt-4">${i.product.productPrice * i.product.quanity}</p>
 										</td>
 										<td>
 											<button
@@ -155,7 +155,6 @@
 												<i class="fa fa-times text-danger"></i>
 											</button>
 										</td>
-
 									</tr>
 								</C:forEach>
 
